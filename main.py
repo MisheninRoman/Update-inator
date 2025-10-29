@@ -93,7 +93,9 @@ class BrowserApp:
         self.btn_stop.pack(pady=5)
 
         # статус
-        self.status = tk.Label(root, text="Браузер не запущен")
+        self.status = tk.Label(
+            root, text="Браузер не запущен", font=("Arial", 10, "bold"), fg="red"
+        )
         self.status.pack(pady=5)
 
         # поле для урла
@@ -151,16 +153,16 @@ class BrowserApp:
         for path in possible_paths:
             if os.path.exists(path):
                 self.browser_path_var.set(path)
-                self.status.config(text=f"Браузер найден!")
+                self.status.config(text=f"Браузер найден!", fg="green")
                 self.save_settings()
                 return
 
-        self.status.config(text="Браузер не найден автоматически")
+        self.status.config(text="Браузер не найден автоматически", fg="red")
 
     def launch_browser(self):
         # проверяем если браузер уже запущен
         if self.browser_launched and self.driver:
-            self.status.config(text="Браузер уже запущен!")
+            self.status.config(text="Браузер уже запущен!", fg="orange")
             return
 
         try:
@@ -183,7 +185,9 @@ class BrowserApp:
                         text="Используется автоматически найденный браузер..."
                     )
                 else:
-                    self.status.config(text="Браузер не найден. Укажите путь вручную.")
+                    self.status.config(
+                        text="Браузер не найден. Укажите путь вручную.", fg="red"
+                    )
                     return
 
             # путь к драйверу
@@ -192,7 +196,8 @@ class BrowserApp:
             # проверяем есть ли драйвер
             if not os.path.exists(driver_path):
                 self.status.config(
-                    text="Драйвер не найден! Убедитесь, что yandexdriver.exe в папке со скриптом."
+                    text="Драйвер не найден! Убедитесь, что yandexdriver.exe в папке со скриптом.",
+                    fg="red",
                 )
                 return
 
@@ -209,7 +214,7 @@ class BrowserApp:
 
             # обновляем статус
             self.browser_launched = True
-            self.status.config(text="Браузер запущен")
+            self.status.config(text="Браузер запущен", fg="green")
 
             # меняем кнопки
             self.btn_launch.config(state=tk.DISABLED)
@@ -218,7 +223,7 @@ class BrowserApp:
             self.btn_start.config(state=tk.DISABLED)
 
         except Exception as e:
-            self.status.config(text=f"Ошибка: {str(e)}")
+            self.status.config(text=f"Ошибка: {str(e)}", fg="red")
             print("Ошибка при запуске браузера:", e)
 
     def close_browser(self):
@@ -243,16 +248,16 @@ class BrowserApp:
             self.btn_start.config(state=tk.DISABLED)
             self.btn_stop.config(state=tk.DISABLED)
 
-            self.status.config(text="Браузер закрыт")
+            self.status.config(text="Браузер закрыт", fg="red")
 
     def find_button(self):
         # ищем кнопку на странице
         if not self.driver:
-            self.status.config(text="Сначала запустите браузер!")
+            self.status.config(text="Сначала запустите браузер!", fg="orange")
             return
 
         try:
-            self.status.config(text="Ищу кнопку...")
+            self.status.config(text="Ищу кнопку...", fg="orange")
             wait = WebDriverWait(self.driver, 10)
 
             # разные способы найти кнопку
@@ -303,7 +308,9 @@ class BrowserApp:
 
             if found_selector:
                 self.successful_selector = found_selector
-                self.status.config(text=f"Кнопка найдена! Селектор: {found_selector}")
+                self.status.config(
+                    text=f"Кнопка найдена! Селектор: {found_selector}", fg="green"
+                )
 
                 # сохраняем настройки
                 self.save_settings()
@@ -311,10 +318,12 @@ class BrowserApp:
                 # включаем кнопку старта
                 self.btn_start.config(state=tk.NORMAL)
             else:
-                self.status.config(text="Кнопка не найдена! Попробуйте другой селектор")
+                self.status.config(
+                    text="Кнопка не найдена! Попробуйте другой селектор", fg="red"
+                )
 
         except Exception as e:
-            self.status.config(text=f"Ошибка: {str(e)}")
+            self.status.config(text=f"Ошибка: {str(e)}", fg="red")
             print("Ошибка при поиске кнопки:", e)
 
     def find_and_click_button(self):
@@ -357,21 +366,23 @@ class BrowserApp:
     def start_clicking(self):
         # запускаем авто-клик
         if not hasattr(self, "successful_selector"):
-            self.status.config(text="Сначала найдите кнопку!")
+            self.status.config(text="Сначала найдите кнопку!", fg="red")
             return
 
         # проверяем интервал
         try:
             interval = int(self.interval_var.get())
             if interval <= 0:
-                self.status.config(text="Интервал должен быть положительным числом!")
+                self.status.config(
+                    text="Интервал должен быть положительным числом!", fg="red"
+                )
                 return
         except ValueError:
-            self.status.config(text="Введите корректный интервал (число)!")
+            self.status.config(text="Введите корректный интервал (число)!", fg="red")
             return
 
         self.is_running = True
-        self.status.config(text="Авто-клик запущен")
+        self.status.config(text="Авто-клик запущен", fg="green")
 
         # меняем кнопки
         self.btn_start.config(state=tk.DISABLED)
@@ -396,7 +407,9 @@ class BrowserApp:
                     self.status.config(text=status_text)
                     print(status_text)
                 else:
-                    self.status.config(text="Не удалось найти кнопку для клика")
+                    self.status.config(
+                        text="Не удалось найти кнопку для клика", fg="red"
+                    )
                     self.is_running = False
                     break
 
@@ -419,7 +432,7 @@ class BrowserApp:
     def stop_clicking(self):
         # останавливаем авто-клик
         self.is_running = False
-        self.status.config(text="Авто-клик остановлен")
+        self.status.config(text="Авто-клик остановлен", fg="orange")
 
         # обновляем кнопки
         if self.browser_launched:
