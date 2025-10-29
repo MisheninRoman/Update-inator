@@ -24,55 +24,9 @@ class BrowserApp:
         self.settings = self.load_settings()
 
         # делаем кнопки
-        self.btn_launch = tk.Button(
-            root, text="Запустить браузер", command=self.launch_browser
-        )
-        self.btn_launch.pack(pady=5)
-
-        self.btn_close_browser = tk.Button(
-            root, text="Закрыть браузер", command=self.close_browser, state=tk.DISABLED
-        )
-        self.btn_close_browser.pack(pady=5)
-
-        self.btn_find = tk.Button(
-            root, text="Найти кнопку", command=self.find_button, state=tk.DISABLED
-        )
-        self.btn_find.pack(pady=5)
-
-        self.btn_start = tk.Button(
-            root,
-            text="Запустить авто-клик",
-            command=self.start_clicking,
-            state=tk.DISABLED,
-        )
-        self.btn_start.pack(pady=5)
-
-        # кнопка остановки
-        self.btn_stop = tk.Button(
-            root, text="Остановить", command=self.stop_clicking, state=tk.DISABLED
-        )
-        self.btn_stop.pack(pady=5)
-
-        # статус 
-        self.status = tk.Label(root, text="Браузер не запущен")
-        self.status.pack(pady=5)
-
-        # поле для ввода интервала
-        tk.Label(root, text="Интервал (секунды):").pack()
-        self.interval_var = tk.StringVar(value="5")
-        self.interval_entry = tk.Entry(root, textvariable=self.interval_var)
-        self.interval_entry.pack(pady=5)
-
-        # поле для урла
-        tk.Label(root, text="URL страницы:").pack()
-        self.url_var = tk.StringVar(
-            value=self.settings.get("url", "https://hpsm.emias.mos.ru/sm/index.do")
-        )
-        self.url_entry = tk.Entry(root, textvariable=self.url_var, width=40)
-        self.url_entry.pack(pady=5)
 
         # поле для пути к браузеру
-        tk.Label(root, text="Путь к Яндекс.раузеру:").pack()
+        tk.Label(root, text="Путь к Яндекс.раузеру:").pack(pady=5)
         browser_frame = tk.Frame(root)
         browser_frame.pack(pady=5, fill=tk.X, padx=10)
 
@@ -89,6 +43,22 @@ class BrowserApp:
         )
         self.btn_browse.pack(side=tk.RIGHT, padx=(5, 0))
 
+        # кнопка для автоматического поиска браузера
+        self.btn_auto_find = tk.Button(
+            root, text="Авто-поиск браузера", command=self.auto_find_browser
+        )
+        self.btn_auto_find.pack(pady=5)
+
+        self.btn_launch = tk.Button(
+            root, text="Запустить браузер", command=self.launch_browser
+        )
+        self.btn_launch.pack(pady=5)
+
+        self.btn_close_browser = tk.Button(
+            root, text="Закрыть браузер", command=self.close_browser, state=tk.DISABLED
+        )
+        self.btn_close_browser.pack(pady=5)
+
         # поле для селектора если автоматически не находит
         tk.Label(root, text="CSS-селектор (если автоматически не находит):").pack()
         self.selector_var = tk.StringVar(
@@ -97,11 +67,42 @@ class BrowserApp:
         self.selector_entry = tk.Entry(root, textvariable=self.selector_var, width=40)
         self.selector_entry.pack(pady=5)
 
-        # кнопка для автоматического поиска браузера
-        self.btn_auto_find = tk.Button(
-            root, text="Авто-поиск браузера", command=self.auto_find_browser
+        self.btn_find = tk.Button(
+            root, text="Найти кнопку", command=self.find_button, state=tk.DISABLED
         )
-        self.btn_auto_find.pack(pady=5)
+        self.btn_find.pack(pady=5)
+
+        # поле для ввода интервала
+        tk.Label(root, text="Интервал (секунды):").pack()
+        self.interval_var = tk.StringVar(value="5")
+        self.interval_entry = tk.Entry(root, textvariable=self.interval_var)
+        self.interval_entry.pack(pady=5)
+
+        self.btn_start = tk.Button(
+            root,
+            text="Запустить авто-клик",
+            command=self.start_clicking,
+            state=tk.DISABLED,
+        )
+        self.btn_start.pack(pady=5)
+
+        # кнопка остановки
+        self.btn_stop = tk.Button(
+            root, text="Остановить", command=self.stop_clicking, state=tk.DISABLED
+        )
+        self.btn_stop.pack(pady=5)
+
+        # статус
+        self.status = tk.Label(root, text="Браузер не запущен")
+        self.status.pack(pady=5)
+
+        # поле для урла
+        tk.Label(root, text="URL страницы:").pack()
+        self.url_var = tk.StringVar(
+            value=self.settings.get("url", "https://hpsm.emias.mos.ru/sm/index.do")
+        )
+        self.url_entry = tk.Entry(root, textvariable=self.url_var, width=40)
+        self.url_entry.pack(pady=5)
 
     def load_settings(self):
         # пробуем загрузить настройки из файла
@@ -438,7 +439,6 @@ if __name__ == "__main__":
     root.title("Обнавлятинатор @Mishenin")
     root.geometry("300x500")
     root.configure(bg="#1e8687")
-
     app = BrowserApp(root)
 
     # при закрытии окна
