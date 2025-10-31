@@ -155,9 +155,11 @@ class BrowserApp:
                 self.browser_path_var.set(path)
                 self.status.config(text=f"Браузер найден!", fg="green")
                 self.save_settings()
+                print(f'Браузер найден!')
                 return
 
         self.status.config(text="Браузер не найден автоматически", fg="red")
+        print('Браузер не найден автоматически')
 
     def launch_browser(self):
         # проверяем если браузер уже запущен
@@ -215,6 +217,7 @@ class BrowserApp:
             # обновляем статус
             self.browser_launched = True
             self.status.config(text="Браузер запущен", fg="green")
+            print('Браузер запущен!')
 
             # меняем кнопки
             self.btn_launch.config(state=tk.DISABLED)
@@ -249,6 +252,7 @@ class BrowserApp:
             self.btn_stop.config(state=tk.DISABLED)
 
             self.status.config(text="Браузер закрыт", fg="red")
+            print('Браузер закрыт')
 
     def find_button(self):
         # ищем кнопку на странице
@@ -258,6 +262,7 @@ class BrowserApp:
 
         try:
             self.status.config(text="Ищу кнопку...", fg="orange")
+            print('Ищу кнопку...')
             wait = WebDriverWait(self.driver, 10)
 
             # разные способы найти кнопку
@@ -367,6 +372,7 @@ class BrowserApp:
         # запускаем авто-клик
         if not hasattr(self, "successful_selector"):
             self.status.config(text="Сначала найдите кнопку!", fg="red")
+            print('Перед запуском Клика найдите кнопку!')
             return
 
         # проверяем интервал
@@ -453,13 +459,15 @@ if __name__ == "__main__":
     root.geometry("300x500")
     root.configure(bg="#1e8687")
     app = BrowserApp(root)
-
+    print('Обновлятинатор запущен!')
     # при закрытии окна
     def on_closing():
         app.stop_clicking()
         if app.driver:
             app.driver.quit()
         root.destroy()
+        print('Обновлятинатор завершил работу!')
+
 
     root.protocol("WM_DELETE_WINDOW", on_closing)
     root.mainloop()
