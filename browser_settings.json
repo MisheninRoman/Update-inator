@@ -1,5 +1,5 @@
 {
   "browser_path": "C:\\Users\\Roman/AppData/Local/Yandex/YandexBrowser/Application/browser.exe",
-  "url": "https://hpsm.emias.mos.ru/sm/index.do",
-  "selector": "[aria-label='Обновить']"
+  "selector": "aria-label='Обновить'",
+  "selected_browser": "yandex"
 }
