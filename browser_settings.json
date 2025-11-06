@@ -1,5 +1,5 @@
 {
-  "browser_path": "C:\\Users\\Roman/AppData/Local/Yandex/YandexBrowser/Application/browser.exe",
+  "browser_path": "C:/Program Files/Google/Chrome/Application/chrome.exe",
   "selector": "aria-label='Обновить'",
-  "selected_browser": "yandex"
+  "selected_browser": "chrome"
 }

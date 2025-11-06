@@ -97,7 +97,7 @@ class BrowserApp:
         #self.create_separator()
 
         # ыбор браузера
-        tk.Label(self.root, text="Выберите браузер:", **self.title_style).pack(pady=(10, 5))
+        tk.Label(self.root, text="(1) Выберите браузер:", **self.title_style).pack(pady=(10, 5))
         
         # фрейм для кнопок браузеров
         browser_frame = tk.Frame(self.root, bg=self.bg_color)
@@ -125,7 +125,7 @@ class BrowserApp:
         self.create_separator()
 
         # Путь к браузеру
-        tk.Label(self.root, text="Путь к браузеру:", **self.title_style).pack(pady=(10, 5))
+        tk.Label(self.root, text="(1.1) Путь к браузеру: (если не найден авт-ки)", **self.title_style).pack(pady=(10, 5))
         
         path_frame = tk.Frame(self.root, bg=self.bg_color)
         path_frame.pack(pady=5, fill=tk.X, padx=20)
@@ -147,10 +147,10 @@ class BrowserApp:
         )
         self.btn_browse.pack(side=tk.RIGHT, padx=(5, 0))
 
-        # Автопоиск браузера
+        # поиск браузера
         self.btn_auto_find = tk.Button(
             self.root, 
-            text="Авто-поиск браузера", 
+            text="Поиск браузера", 
             command=self.auto_find_browser,
             **self.button_style
         )
@@ -159,6 +159,7 @@ class BrowserApp:
         #разделитель
         self.create_separator()
 
+        tk.Label(self.root, text="(2) Запустите\Закройте браузер:", **self.title_style).pack(pady=(10, 5))
         # запуск\закрытие браузера
         control_frame = tk.Frame(self.root, bg=self.bg_color)
         control_frame.pack(pady=10)
@@ -186,8 +187,8 @@ class BrowserApp:
         # поиск кнопки
         tk.Label(
             self.root, 
-            text="CSS-селектор (если автоматически не находит):", 
-            **self.label_style
+            text="(3) CSS-селектор (если автоматически не находит):", 
+            **self.title_style
         ).pack(pady=(10, 5))
         
         self.selector_var = tk.StringVar(value=self.settings.get("selector", "[aria-label='Обновить']"))
@@ -215,7 +216,7 @@ class BrowserApp:
         interval_frame = tk.Frame(self.root, bg=self.bg_color)
         interval_frame.pack(pady=5)
 
-        tk.Label(interval_frame, text="Интервал (секунды):", **self.label_style).pack(side=tk.LEFT)
+        tk.Label(interval_frame, text="(4) Интервал (секунды):", **self.title_style).pack(side=tk.LEFT)
         
         self.interval_var = tk.StringVar(value="5")
         self.interval_entry = tk.Entry(
@@ -254,7 +255,7 @@ class BrowserApp:
         self.status = tk.Label(
             self.root, 
             text="Браузер не запущен", 
-            font=("Arial", 8, "bold"), 
+            font=("Arial", 10, "bold"), 
             fg="#ff6b6b", 
             bg=self.bg_color
         )
